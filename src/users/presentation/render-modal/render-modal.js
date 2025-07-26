@@ -17,8 +17,6 @@ export const showModal = async (id) => {
     const user = await getUserById(id);
 
     setFormValues(user);
-
-
 }
 
 //TODO limpiar form
@@ -67,15 +65,19 @@ export const renderModal = (element, saveUserCallback) => {
 
         const formData = new FormData(form);
         const userLike = { ...loadedUser };
-        for (const [key, value] of formData) {
+        const isActive = document.querySelector('#is-active').checked;
 
+        for (const [key, value] of formData.entries()) {
+        console.log({key}, {value});
             if (key === 'balance') {
                 userLike[key] = +value;//el + significa que convierte a un numero
                 continue;
             }
-
             if (key === 'isActive') {
-                userLike[key] = value === 'on' ? true : false;
+                userLike[key] = true;
+                continue;
+            }else if (!isActive) {
+                userLike['isActive'] = false;  
                 continue;
             }
 
@@ -85,6 +87,8 @@ export const renderModal = (element, saveUserCallback) => {
 
         // console.log(userLike);
         await saveUserCallback(userLike);
+        hideModal();
+
     });
 
     element.append(modal);

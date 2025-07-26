@@ -23,9 +23,9 @@ export const saveUser = async (userLike) => {
         userUpdated = await createUser(userToSave);
     }
 
-    localHostUserToModel(userUpdated)
+    userUpdated = localHostUserToModel(userUpdated)
 
-    return updateUser;
+    return userUpdated;
 }
 
 /**
@@ -37,7 +37,7 @@ const createUser = async (user) => {
         method: 'POST',
         body: JSON.stringify(user),
         headers : {
-            'Content-Type': 'application-json'
+            'Content-Type': 'application/json'
         }
     });
 
@@ -57,7 +57,7 @@ const updateUser = async (user) => {
         method: 'PATCH',
         body: JSON.stringify(user),
         headers : {
-            'Content-Type': 'application-json'
+            'Content-Type': 'application/json'
         }
     });
 
